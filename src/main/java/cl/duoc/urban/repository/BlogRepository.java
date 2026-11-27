@@ -1,9 +1,13 @@
 package cl.duoc.urban.repository;
 
 import cl.duoc.urban.model.Blog;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
-public interface BlogRepository extends JpaRepository<Blog, Long> {
+@Repository
+public interface BlogRepository extends MongoRepository<Blog, Long> {
     Optional<Blog> findBySlug(String slug);
+    boolean existsBySlug(String slug);
 }

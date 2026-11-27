@@ -24,6 +24,13 @@ public class BlogService {
     }
 
     public Blog crear(Blog blog) {
+        if (blog.getId() == null) {
+            long nextId = blogRepository.findAll().stream()
+                    .mapToLong(b -> b.getId() != null ? b.getId() : 0L)
+                    .max()
+                    .orElse(0L) + 1L;
+            blog.setId(nextId);
+        }
         if (blog.getSlug() == null || blog.getSlug().isBlank()) {
             blog.setSlug(blog.getTitulo().toLowerCase().replaceAll("[^a-z0-9]+", "-"));
         }

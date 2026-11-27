@@ -1,30 +1,23 @@
 package cl.duoc.urban.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "blogs")
+@Document(collection = "blogs")
 public class Blog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Indexed(unique = true)
     private String slug;
 
-    @Column(nullable = false)
     private String titulo;
-
-    @Column(length = 500)
     private String resumen;
-
     private String imagenPortada;
     private String categoria;
     private String autor;
-
-    @Lob
-    @Column(columnDefinition = "TEXT")
     private String detalleJson;
 
     public Blog() {}

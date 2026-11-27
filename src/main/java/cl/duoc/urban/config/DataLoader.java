@@ -1,7 +1,7 @@
 package cl.duoc.urban.config;
 
 import cl.duoc.urban.model.Blog;
-import cl.duoc.urban.repository.BlogRepository;
+import cl.duoc.urban.service.BlogService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class DataLoader {
 
     @Bean
-    CommandLineRunner initBlogs(BlogRepository repo) {
+    CommandLineRunner initBlogs(BlogService blogService) {
         return args -> {
-            if (repo.count() == 0) {
+            if (blogService.listarTodos().isEmpty()) {
                 String detalleTallas = """
                 {
                   "subtitulo": "Como elegir tu talla",
@@ -52,7 +52,7 @@ public class DataLoader {
                 }
                 """;
 
-                repo.save(new Blog(
+                blogService.crear(new Blog(
                     "tallas",
                     "Como elegir la talla correcta de zapatillas",
                     "Como elegir correctamente tu talla de zapatillas antes de realizar tu compra.",
@@ -62,7 +62,7 @@ public class DataLoader {
                     detalleTallas
                 ));
 
-                repo.save(new Blog(
+                blogService.crear(new Blog(
                     "cultura-pop",
                     "Cultura pop y lifestyle juvenil",
                     "Descubre tendencias y estilos que forman parte de la cultura urbana.",
